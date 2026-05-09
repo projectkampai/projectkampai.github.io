@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAMPAI Ristorante Giapponese – Sushi Premium a Vignola (MO)</title>
+  <meta name="description" content="KAMPAI Ristorante Giapponese a Vignola – Sushi premium, sashimi e cucina giapponese di alta qualità. Corso Italia 3, Vignola (MO). Prenota ora." />
+  <meta name="keywords" content="ristorante giapponese Vignola, sushi Vignola, sushi Modena, ristorante sushi Vignola, sashimi Vignola, giapponese Modena" />
+  <meta property="og:title" content="KAMPAI – Ristorante Giapponese Premium a Vignola" />
+  <meta property="og:description" content="L'eleganza del Giappone, il gusto dell'eccellenza. Sushi premium a Vignola, Modena." />
+  <meta property="og:type" content="restaurant" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =====================================================
+       CSS VARIABLES
+    ===================================================== */
+    :root {
+      --black:       #080808;
+      --black-soft:  #0f0f0f;
+      --black-mid:   #181818;
+      --gold:        #c9a84c;
+      --gold-light:  #e2c06a;
+      --gold-dark:   #9a7835;
+      --white:       #f5f0e8;
+      --white-pure:  #ffffff;
+      --red:         #c0392b;
+      --grey:        #888888;
+      --grey-light:  #cccccc;
+      --ease:        cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; }
+
+    /* =====================================================
+       CUSTOM CURSOR (desktop only)
+    ===================================================== */
+    @media (pointer: fine) {
+      body { cursor: none; }
+      #cursor {
+        position: fixed;
+        width: 10px; height: 10px;
+        background: var(--gold);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width .3s, height .3s;
+        mix-blend-mode: difference;
+      }
+      #cursor-ring {
+        position: fixed;
+        width: 40px; height: 40px;
+        border: 1px solid rgba(201,168,76,.5);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    /* =====================================================
+       LOADER
+    ===================================================== */
+    #loader {
+      position: fixed; inset: 0;
+      background: var(--black);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .8s ease, visibility .8s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: .3em;
+      animation: ldPulse 1.5s ease infinite alternate;
+    }
+    .loader-line {
+      width: 0; height: 1px;
+      background: var(--gold);
+      margin-top: .8rem;
+      animation: ldLine 1.8s var(--ease) forwards;
+    }
+    @keyframes ldPulse { from { opacity:.3 } to { opacity:1 } }
+    @keyframes ldLine  { to   { width: 180px } }
+
+    /* =====================================================
+       NAVBAR
+       — lang switcher embedded inside nav, no overlap
+    ===================================================== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 5vw;
+      transition: background .5s, padding .5s, backdrop-filter .5s;
+      gap: 1rem;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,.93);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: .9rem 5vw;
+      border-bottom: 1px solid rgba(201,168,76,.1);
+    }
+
+    /* Logo */
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: .2em;
+      text-decoration: none;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    /* Center links */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0 auto;
+    }
+    .nav-links a {
+      color: var(--grey-light);
+      text-decoration: none;
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      position: relative;
+      transition: color .3s;
+      white-space: nowrap;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width .4s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Right side: lang + book button */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      flex-shrink: 0;
+    }
+    .lang-switcher { display: flex; gap: .3rem; }
+    .lang-btn {
+      background: transparent;
+      border: 1px solid rgba(201,168,76,.3);
+      color: var(--grey);
+      font-family: 'Inter', sans-serif;
+      font-size: .62rem;
+      letter-spacing: .12em;
+      padding: .28rem .55rem;
+      cursor: pointer;
+      transition: all .3s;
+      line-height: 1;
+    }
+    .lang-btn.active,
+    .lang-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    .btn-book {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: .5rem 1.1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .3s, transform .3s;
+      display: inline-block;
+    }
+    .btn-book:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: .3rem;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 1px;
+      background: var(--white);
+      transition: all .4s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile fullscreen menu */
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0;
+      background: var(--black);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.8rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 7vw, 2.8rem);
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: .08em;
+      transition: color .3s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-lang { display: flex; gap: .5rem; margin-top: .5rem; }
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+    #hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Placeholder bg — swap with real photo */
+    .hero-bg-img {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, #1a0a00 0%, #0d0d0d 40%, #080808 100%);
+      /* ↓ REPLACE with your real photo:
+         background-image: url('img/hero.jpg');
+         background-size: cover; background-position: center; */
+      transform: scale(1.05);
+      animation: heroZoom 14s var(--ease) forwards;
+    }
+    /* Demo pattern to suggest a sushi image */
+    .hero-bg-img::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 65% 45%, rgba(180,120,40,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 20% 75%, rgba(192,57,43,.09) 0%, transparent 60%);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(8,8,8,.35) 0%,
+        rgba(8,8,8,.55) 55%,
+        rgba(8,8,8,.92) 100%);
+      z-index: 1;
+    }
+    @keyframes heroZoom { to { transform: scale(1); } }
+
+    /* Decorative Japanese character */
+    .hero-kanji {
+      position: absolute;
+      right: 6vw; top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(8rem, 18vw, 22rem);
+      color: rgba(201,168,76,.06);
+      font-family: serif;
+      line-height: 1;
+      user-select: none;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 5vw;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-size: .68rem;
+      letter-spacing: .45em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease .5s forwards;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4.5rem, 14vw, 12rem);
+      font-weight: 900;
+      line-height: .92;
+      color: var(--white-pure);
+      letter-spacing: .08em;
+      opacity: 0;
+      animation: fadeUp 1s ease .7s forwards;
+    }
+    .hero-title .gold { color: var(--gold); }
+
+    .hero-subtitle-wrap {
+      margin-top: 2.2rem;   /* ← more breathing room above */
+      margin-bottom: 2.8rem; /* ← space before CTAs */
+      opacity: 0;
+      animation: fadeUp 1s ease .9s forwards;
+    }
+    .hero-divider {
+      width: 50px; height: 1px;
+      background: var(--gold);
+      margin: 0 auto 1.4rem;
+    }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+      color: rgba(245,240,232,.72);
+      letter-spacing: .03em;
+      line-height: 1.5;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.15s forwards;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      padding: .85rem 2rem;
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background .3s, transform .3s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block;
+      border: 1px solid rgba(245,240,232,.4);
+      color: var(--white);
+      padding: .85rem 2rem;
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 400;
+      transition: border-color .3s, color .3s, transform .3s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.8s forwards;
+    }
+    .hero-scroll span {
+      font-size: .58rem;
+      letter-spacing: .35em;
+      color: var(--grey);
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollAnim 2.2s ease infinite;
+    }
+    @keyframes scrollAnim {
+      0%   { transform:scaleY(0); transform-origin:top }
+      49%  { transform:scaleY(1); transform-origin:top }
+      50%  { transform:scaleY(1); transform-origin:bottom }
+      100% { transform:scaleY(0); transform-origin:bottom }
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(28px) }
+      to   { opacity:1; transform:translateY(0) }
+    }
+
+    /* =====================================================
+       SECTIONS SHARED
+    ===================================================== */
+    section { padding: clamp(4rem, 9vw, 8rem) clamp(1.5rem, 7vw, 8vw); }
+
+    .section-eyebrow {
+      font-size: .62rem;
+      letter-spacing: .42em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: var(--grey);
+      margin-top: .7rem;
+      line-height: 1.65;
+    }
+    .gold-line { width: 46px; height: 1px; background: var(--gold); margin: 1.4rem 0; }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity .85s var(--ease), transform .85s var(--ease);
+    }
+    .reveal-left {
+      opacity: 0; transform: translateX(-36px);
+      transition: opacity .85s var(--ease), transform .85s var(--ease);
+    }
+    .reveal-right {
+      opacity: 0; transform: translateX(36px);
+      transition: opacity .85s var(--ease), transform .85s var(--ease);
+    }
+    .reveal.visible,
+    .reveal-left.visible,
+    .reveal-right.visible { opacity:1; transform:translate(0); }
+
+    /* =====================================================
+       PLACEHOLDER IMAGE UTIL
+       Replace src with real photos later
+    ===================================================== */
+    .img-placeholder {
+      width: 100%; height: 100%;
+      background: var(--black-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(201,168,76,.25);
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    /* =====================================================
+       INTRO
+    ===================================================== */
+    #intro {
+      background: var(--black-soft);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: center;
+    }
+    .intro-img-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+    .intro-img-wrap img,
+    .intro-img-wrap .img-placeholder {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.8) saturate(.85);
+      transition: transform .8s ease;
+    }
+    .intro-img-wrap:hover img { transform: scale(1.04); }
+    .intro-badge {
+      position: absolute;
+      bottom: -1.2rem; right: -1.2rem;
+      width: 110px; height: 110px;
+      background: var(--gold);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--black);
+    }
+    .intro-badge strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 900; line-height: 1;
+    }
+    .intro-badge span { font-size: .58rem; letter-spacing: .1em; }
+    .intro-text p {
+      font-size: .95rem; line-height: 1.9;
+      color: rgba(245,240,232,.62);
+      margin-bottom: 1.1rem;
+    }
+    .intro-stats {
+      display: flex;
+      gap: clamp(1.5rem, 4vw, 3rem);
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .stat-item strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      color: var(--gold); font-weight: 700;
+    }
+    .stat-item span { font-size: .65rem; letter-spacing: .15em; color: var(--grey); text-transform: uppercase; }
+
+    /* =====================================================
+       SIGNATURE DISHES
+    ===================================================== */
+    #signature { background: var(--black); }
+    .dishes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: clamp(2rem, 5vw, 4rem);
+      flex-wrap: wrap;
+    }
+    .dishes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .dish-card {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--black-mid);
+    }
+    .dish-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.6) saturate(.8);
+      transition: transform .8s ease, filter .5s ease;
+    }
+    .dish-card:hover img { transform: scale(1.07); filter: brightness(.4) saturate(.9); }
+    .dish-card .img-placeholder { position: absolute; inset: 0; }
+    .dish-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.8rem 1.4rem;
+      background: linear-gradient(to top, rgba(8,8,8,.97) 0%, transparent 100%);
+    }
+    .dish-tag { font-size: .58rem; letter-spacing: .25em; color: var(--gold); text-transform: uppercase; margin-bottom: .35rem; }
+    .dish-name { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 700; color: var(--white); }
+    .dish-desc {
+      font-size: .78rem; color: var(--grey-light); margin-top: .35rem; line-height: 1.5;
+      opacity: 0; transition: opacity .4s .1s;
+    }
+    .dish-card:hover .dish-desc { opacity: 1; }
+
+    /* =====================================================
+       EXPERIENCE
+    ===================================================== */
+    #experience {
+      background: var(--black-soft);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0;
+    }
+    .exp-image {
+      position: relative;
+      min-height: clamp(50vh, 70vh, 85vh);
+      overflow: hidden;
+      background: var(--black-mid);
+    }
+    .exp-image img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.55) saturate(.85);
+      transition: transform 1s ease;
+    }
+    .exp-image:hover img { transform: scale(1.04); }
+    .exp-image .img-placeholder { position: absolute; inset: 0; }
+    .exp-content {
+      padding: clamp(4rem, 8vw, 7rem) clamp(2rem, 6vw, 5vw);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .exp-feature {
+      display: flex;
+      gap: 1.3rem;
+      margin-bottom: 2.2rem;
+      padding-bottom: 2.2rem;
+      border-bottom: 1px solid rgba(201,168,76,.1);
+    }
+    .exp-feature:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .exp-icon {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border: 1px solid rgba(201,168,76,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .exp-feature h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--white); margin-bottom: .35rem; }
+    .exp-feature p  { font-size: .82rem; color: var(--grey); line-height: 1.7; }
+
+    /* =====================================================
+       MENU — compact scrollable list
+    ===================================================== */
+    #menu { background: var(--black); }
+
+    /* Tab bar */
+    .menu-tabs {
+      display: flex;
+      gap: 0;
+      margin: 2.5rem 0 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      border-bottom: 1px solid rgba(201,168,76,.12);
+    }
+    .menu-tabs::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--grey);
+      font-family: 'Inter', sans-serif;
+      font-size: .65rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      padding: .75rem 1.1rem;
+      cursor: pointer;
+      transition: color .3s, border-color .3s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-bottom: -1px;
+    }
+    .cat-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .cat-btn:hover  { color: var(--grey-light); }
+
+    /* Two-column scrollable panel */
+    .menu-panel {
+      display: none;
+      margin-top: 1rem;
+    }
+    .menu-panel.active { display: block; }
+
+    /* Inner scroll container — max height so it doesn't dominate the page */
+    .menu-scroll {
+      max-height: 520px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(201,168,76,.3) transparent;
+      columns: 2;
+      column-gap: 0;
+    }
+    .menu-scroll::-webkit-scrollbar { width: 4px; }
+    .menu-scroll::-webkit-scrollbar-thumb { background: rgba(201,168,76,.3); border-radius: 2px; }
+
+    /* Each dish row */
+    .menu-row {
+      display: flex;
+      align-items: baseline;
+      gap: .5rem;
+      padding: .62rem 1rem;
+      border-bottom: 1px solid rgba(201,168,76,.06);
+      break-inside: avoid;
+      transition: background .25s;
+    }
+    .menu-row:hover { background: rgba(201,168,76,.04); }
+    .menu-row-num {
+      font-size: .55rem;
+      color: rgba(201,168,76,.35);
+      letter-spacing: .08em;
+      flex-shrink: 0;
+      width: 2.4rem;
+      text-align: right;
+      font-family: 'Inter', sans-serif;
+    }
+    .menu-row-body { flex: 1; min-width: 0; }
+    .menu-row-name {
+      font-size: .88rem;
+      color: var(--white);
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .menu-row-desc {
+      font-size: .72rem;
+      color: var(--grey);
+      line-height: 1.4;
+      margin-top: .1rem;
+    }
+    .menu-row-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .95rem;
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Mobile: single column */
+    @media (max-width: 600px) {
+      .menu-scroll { columns: 1; max-height: 420px; }
+      .cat-btn { font-size: .6rem; padding: .65rem .8rem; }
+    }
+
+    /* All You Can Eat banner */
+    .ayce-banner {
+      margin-top: 2rem;
+      padding: 1.6rem 2rem;
+      border: 1px solid rgba(201,168,76,.22);
+      background: rgba(201,168,76,.04);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ayce-banner h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--gold); margin-bottom: .3rem;
+    }
+    .ayce-banner p { font-size: .8rem; color: var(--grey); line-height: 1.7; max-width: 480px; }
+    .ayce-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900; color: var(--white);
+      white-space: nowrap; text-align: right;
+    }
+    .ayce-price span { font-size: .62rem; color: var(--grey); letter-spacing: .13em; display: block; }
+
+    /* =====================================================
+       CHI SIAMO
+    ===================================================== */
+    #about { background: var(--black-soft); }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 7rem);
+      align-items: center;
+    }
+    .about-images { position: relative; padding-bottom: 3.5rem; }
+    .about-img-main {
+      width: 78%; aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: brightness(.75) saturate(.85);
+      display: block;
+    }
+    .about-img-accent {
+      position: absolute; bottom: 0; right: 0;
+      width: 52%; aspect-ratio: 1;
+      object-fit: cover;
+      filter: brightness(.7) saturate(.8);
+      border: 4px solid var(--black-soft);
+    }
+    /* Placeholder versions */
+    .about-img-main.img-placeholder { width: 78%; height: 340px; }
+    .about-img-accent.img-placeholder { position: absolute; bottom: 0; right: 0; width: 52%; height: 200px; }
+
+    .about-text blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      color: var(--gold-light);
+      line-height: 1.5;
+      margin: 1.8rem 0;
+      padding-left: 1.4rem;
+      border-left: 2px solid var(--gold);
+    }
+    .about-text p {
+      font-size: .93rem; line-height: 1.9;
+      color: rgba(245,240,232,.62);
+      margin-bottom: 1.1rem;
+    }
+
+    /* =====================================================
+       REVIEWS — infinite scroll strip
+    ===================================================== */
+    #reviews { background: var(--black); overflow: hidden; }
+    .reviews-header { text-align: center; }
+    .google-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin-top: 1rem;
+      padding: .6rem 1.2rem;
+      border: 1px solid rgba(201,168,76,.2);
+    }
+    .google-rating .stars { color: var(--gold); font-size: 1.1rem; letter-spacing: .1em; }
+    .google-rating .score { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); }
+    .google-rating .label { font-size: .62rem; letter-spacing: .15em; color: var(--grey); text-transform: uppercase; }
+
+    .reviews-track-wrap {
+      overflow: hidden; margin-top: 3.5rem;
+      -webkit-mask: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      mask: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+    .reviews-track {
+      display: flex; gap: 1.5rem;
+      animation: reviewsScroll 32s linear infinite;
+      width: max-content;
+    }
+    .reviews-track:hover { animation-play-state: paused; }
+    @keyframes reviewsScroll {
+      from { transform: translateX(0) }
+      to   { transform: translateX(-50%) }
+    }
+    .review-card {
+      flex-shrink: 0;
+      width: clamp(280px, 30vw, 380px);
+      background: var(--black-mid);
+      padding: 2rem 2rem 1.8rem;
+      border: 1px solid rgba(201,168,76,.1);
+    }
+    .review-stars { color: var(--gold); font-size: .85rem; margin-bottom: .9rem; }
+    .review-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(.95rem, 1.5vw, 1.05rem);
+      line-height: 1.65;
+      color: rgba(245,240,232,.78);
+      margin-bottom: 1.3rem;
+    }
+    .review-author { font-size: .65rem; letter-spacing: .18em; color: var(--grey); text-transform: uppercase; }
+    .review-source { color: var(--gold); margin-left: .4rem; font-size: .62rem; }
+
+    /* =====================================================
+       GALLERY
+    ===================================================== */
+    #gallery { background: var(--black-soft); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .4rem;
+      margin-top: 3rem;
+    }
+    .gallery-item { overflow: hidden; position: relative; background: var(--black-mid); }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .gallery-item:nth-child(5) { grid-column: span 2; }
+    .gallery-item img,
+    .gallery-item .img-placeholder {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      min-height: 200px;
+      filter: brightness(.62) saturate(.8);
+      transition: transform .8s ease, filter .5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.06); filter: brightness(.5) saturate(1.1); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(201,168,76,.12);
+      opacity: 0; transition: opacity .4s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-overlay span { color: var(--gold); font-size: 1.4rem; }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* =====================================================
+       CONTACTS
+    ===================================================== */
+    #contact { background: var(--black); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: clamp(3rem, 7vw, 6rem);
+      margin-top: 3.5rem;
+    }
+    .contact-item {
+      display: flex; gap: 1.1rem;
+      margin-bottom: 1.8rem; padding-bottom: 1.8rem;
+      border-bottom: 1px solid rgba(201,168,76,.08);
+    }
+    .contact-item:last-of-type { border-bottom: none; }
+    .contact-icon { color: var(--gold); font-size: 1.05rem; flex-shrink: 0; margin-top: .15rem; }
+    .contact-item strong {
+      display: block; font-size: .6rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .3rem;
+    }
+    .contact-item p { font-size: .88rem; color: rgba(245,240,232,.68); line-height: 1.75; }
+    .contact-item a { color: rgba(245,240,232,.68); text-decoration: none; transition: color .3s; }
+    .contact-item a:hover { color: var(--gold); }
+    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .3rem .8rem; margin-top: .2rem; }
+    .hours-day  { font-size: .82rem; color: var(--grey); }
+    .hours-time { font-size: .82rem; color: rgba(245,240,232,.8); text-align: right; }
+    .social-links { display: flex; gap: .7rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .social-link {
+      width: 42px; height: 42px;
+      border: 1px solid rgba(201,168,76,.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--grey); text-decoration: none; font-size: .8rem;
+      transition: all .3s; flex-shrink: 0;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+    .map-wrap { min-height: 420px; }
+    .map-wrap iframe { width: 100%; height: 100%; min-height: 420px; border: none; filter: brightness(.72) saturate(.65) contrast(1.1); }
+
+    /* =====================================================
+       WHATSAPP FIXED BUTTON
+    ===================================================== */
+    #wa-fixed {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      z-index: 998;
+      display: flex; align-items: center; gap: .7rem;
+      background: #25D366; color: #fff;
+      text-decoration: none;
+      padding: .75rem 1.3rem .75rem .9rem;
+      border-radius: 50px;
+      font-size: .78rem; letter-spacing: .04em; font-weight: 500;
+      box-shadow: 0 6px 28px rgba(37,211,102,.38);
+      transition: transform .3s, box-shadow .3s;
+    }
+    #wa-fixed:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(37,211,102,.52); }
+    #wa-fixed svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    footer {
+      background: var(--black-soft);
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 7vw, 8vw) 2rem;
+      border-top: 1px solid rgba(201,168,76,.1);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(201,168,76,.1);
+      margin-bottom: 1.8rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 900; letter-spacing: .2em;
+      color: var(--white); margin-bottom: .9rem;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-brand p { font-size: .82rem; color: var(--grey); line-height: 1.75; max-width: 300px; }
+    .footer-col h4 {
+      font-size: .6rem; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.3rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: .65rem; }
+    .footer-col ul a { font-size: .82rem; color: var(--grey); text-decoration: none; transition: color .3s; }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: .8rem;
+    }
+    .footer-bottom p { font-size: .72rem; color: var(--grey); }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    /* =====================================================
+       RESPONSIVE — Tablet (≤1024px)
+    ===================================================== */
+    @media (max-width: 1024px) {
+      .nav-links { display: none; }
+      .btn-book  { display: none; }
+      .hamburger { display: flex; }
+
+      #intro { grid-template-columns: 1fr; }
+      .intro-badge { display: none; }
+
+      #experience { grid-template-columns: 1fr; }
+      .exp-image { min-height: 50vh; }
+
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-images { display: none; }
+
+      .dishes-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item:nth-child(1) { grid-column: span 2; }
+      .gallery-item:nth-child(5) { grid-column: span 2; }
+
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* =====================================================
+       RESPONSIVE — Mobile (≤768px)
+    ===================================================== */
+    @media (max-width: 768px) {
+      section { padding: clamp(3rem, 8vw, 5rem) 5vw; }
+
+      /* Navbar: logo left, hamburger right only */
+      nav { padding: 1rem 5vw; }
+      .nav-right { display: none; }  /* hide lang+book in top bar */
+
+      .hero-kanji { display: none; }
+
+      .dishes-grid { grid-template-columns: 1fr; }
+      .dishes-header { flex-direction: column; align-items: flex-start; }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .gallery-item:nth-child(1) { grid-column: span 2; }
+      .gallery-item:nth-child(5) { grid-column: span 2; }
+
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: .4rem; }
+
+      #wa-fixed span { display: none; }
+      #wa-fixed { padding: .8rem; border-radius: 50%; }
+
+      .intro-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .menu-categories { gap: .3rem; }
+      .cat-btn { font-size: .6rem; padding: .45rem .9rem; }
+    }
+
+    /* =====================================================
+       RESPONSIVE — Small mobile (≤480px)
+    ===================================================== */
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero-ctas a { width: 100%; max-width: 280px; text-align: center; }
+      .hero-title { font-size: clamp(3.5rem, 18vw, 5rem); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR (desktop) -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ======================== LOADER ======================== -->
+<div id="loader">
+  <div class="loader-logo">KAMPAI</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- ======================== NAVBAR ======================== -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">K<span>A</span>MPAI</a>
+
+  <ul class="nav-links">
+    <li><a href="#menu"    data-i18n="nav.menu">Menù</a></li>
+    <li><a href="#about"   data-i18n="nav.about">Chi Siamo</a></li>
+    <li><a href="#gallery" data-i18n="nav.gallery">Galleria</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Contatti</a></li>
+  </ul>
+
+  <!-- lang + book: grouped right, no overlap -->
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('it')">ITA</button>
+      <button class="lang-btn"        onclick="setLang('en')">ENG</button>
+    </div>
+    <a href="https://wa.me/393334567890" class="btn-book" target="_blank" data-i18n="nav.book">Prenota</a>
+  </div>
+
+  <div class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile fullscreen menu -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true">
+  <a href="#menu"    onclick="closeMobile()" data-i18n="nav.menu">Menù</a>
+  <a href="#about"   onclick="closeMobile()" data-i18n="nav.about">Chi Siamo</a>
+  <a href="#gallery" onclick="closeMobile()" data-i18n="nav.gallery">Galleria</a>
+  <a href="#contact" onclick="closeMobile()" data-i18n="nav.contact">Contatti</a>
+  <a href="https://wa.me/393334567890" target="_blank" style="color:var(--gold)" data-i18n="nav.book">Prenota</a>
+  <div class="mobile-lang">
+    <button class="lang-btn active" onclick="setLang('it')">ITA</button>
+    <button class="lang-btn"        onclick="setLang('en')">ENG</button>
+  </div>
+</div>
+
+<!-- ======================== HERO ======================== -->
+<section id="hero">
+  <!-- REPLACE background-image in .hero-bg-img with your real photo (img/hero.jpg) -->
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-kanji">乾杯</div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Vignola · Modena · Italia</p>
+
+    <h1 class="hero-title">KAM<span class="gold">PAI</span></h1>
+
+    <!-- subtitle wrapped with its own divider, proper spacing -->
+    <div class="hero-subtitle-wrap">
+      <div class="hero-divider"></div>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">L'eleganza del Giappone, il gusto dell'eccellenza.</p>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#menu" class="btn-primary"  data-i18n="hero.cta1">Guarda il Menù</a>
+      <a href="https://wa.me/393334567890" class="btn-outline" target="_blank" data-i18n="hero.cta2">WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span data-i18n="hero.scroll">Scopri</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ======================== INTRO ======================== -->
+<section id="intro">
+  <div class="reveal-left">
+    <div class="intro-img-wrap">
+      <!--
+        REPLACE with: <img src="img/intro.jpg" alt="Sushi KAMPAI" />
+        Photo: interior or platter shot
+      -->
+      <div class="img-placeholder" style="aspect-ratio:3/4">📷 Foto ristorante</div>
+      <div class="intro-badge">
+        <strong>★</strong>
+        <span>PREMIUM</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-text reveal-right">
+    <p class="section-eyebrow" data-i18n="intro.eyebrow">Il Ristorante</p>
+    <h2 class="section-title" data-i18n="intro.title">Un'esperienza<br/><em>oltre il sushi</em></h2>
+    <div class="gold-line"></div>
+    <p data-i18n="intro.p1">Nel cuore di Vignola, KAMPAI è il tempio del sushi d'autore. Ogni piatto è un viaggio sensoriale tra le tradizioni millenarie del Giappone e l'eleganza della cucina contemporanea.</p>
+    <p data-i18n="intro.p2">Ingredienti selezionati, tecniche autentiche e una cura ossessiva per i dettagli fanno di ogni visita un'esperienza indimenticabile.</p>
+    <div class="intro-stats">
+      <div class="stat-item reveal">
+        <strong>3+</strong>
+        <span data-i18n="intro.stat1">Anni di eccellenza</span>
+      </div>
+      <div class="stat-item reveal" style="transition-delay:.15s">
+        <strong>50+</strong>
+        <span data-i18n="intro.stat2">Piatti in menù</span>
+      </div>
+      <div class="stat-item reveal" style="transition-delay:.3s">
+        <strong>4.2★</strong>
+        <span data-i18n="intro.stat3">Google Reviews</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== SIGNATURE ======================== -->
+<section id="signature">
+  <div class="dishes-header">
+    <div class="reveal">
+      <p class="section-eyebrow" data-i18n="sig.eyebrow">I Nostri Capolavori</p>
+      <h2 class="section-title" data-i18n="sig.title">Piatti <em>Signature</em></h2>
+    </div>
+    <a href="#menu" class="btn-outline reveal" data-i18n="sig.cta">Tutto il Menù</a>
+  </div>
+  <div class="dishes-grid">
+    <!-- REPLACE each img-placeholder with <img src="img/dish1.jpg" alt="..."> -->
+    <div class="dish-card reveal">
+      <div class="img-placeholder">📷 KAMPAI Special Roll</div>
+      <div class="dish-info">
+        <p class="dish-tag">Signature</p>
+        <h3 class="dish-name">KAMPAI Special Roll</h3>
+        <p class="dish-desc" data-i18n="dish1.desc">Salmone, avocado, crema di gambero, tobiko dorato, salsa yuzu.</p>
+      </div>
+    </div>
+    <div class="dish-card reveal" style="transition-delay:.15s">
+      <div class="img-placeholder">📷 Sashimi Deluxe</div>
+      <div class="dish-info">
+        <p class="dish-tag">Premium</p>
+        <h3 class="dish-name">Sashimi Deluxe</h3>
+        <p class="dish-desc" data-i18n="dish2.desc">Selezione del giorno: tonno, salmone, branzino, ricciola, daikon.</p>
+      </div>
+    </div>
+    <div class="dish-card reveal" style="transition-delay:.3s">
+      <div class="img-placeholder">📷 Nigiri Omakase</div>
+      <div class="dish-info">
+        <p class="dish-tag">Chef's Choice</p>
+        <h3 class="dish-name">Nigiri Omakase</h3>
+        <p class="dish-desc" data-i18n="dish3.desc">10 pezzi selezionati dallo chef, abbinamento stagionale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== EXPERIENCE ======================== -->
+<section id="experience">
+  <div class="exp-image reveal-left">
+    <!-- REPLACE with: <img src="img/atmosphere.jpg" alt="Atmosfera KAMPAI"> -->
+    <div class="img-placeholder">📷 Atmosfera ristorante</div>
+  </div>
+  <div class="exp-content">
+    <p class="section-eyebrow reveal" data-i18n="exp.eyebrow">L'Esperienza</p>
+    <h2 class="section-title reveal" data-i18n="exp.title">Dove <em>il lusso</em><br/>incontra la tradizione</h2>
+    <div class="gold-line reveal"></div>
+    <div class="exp-feature reveal" style="transition-delay:.1s">
+      <div class="exp-icon">🍣</div>
+      <div>
+        <h4 data-i18n="exp.f1.title">Ingredienti Premium</h4>
+        <p  data-i18n="exp.f1.desc">Pesce freschissimo selezionato ogni giorno, importato dai mercati più esclusivi. Zero compromessi sulla qualità.</p>
+      </div>
+    </div>
+    <div class="exp-feature reveal" style="transition-delay:.2s">
+      <div class="exp-icon">👨‍🍳</div>
+      <div>
+        <h4 data-i18n="exp.f2.title">Maestri dell'Arte</h4>
+        <p  data-i18n="exp.f2.desc">I nostri chef hanno perfezionato l'arte del sushi in Giappone. Ogni preparazione è un rituale di precisione e bellezza.</p>
+      </div>
+    </div>
+    <div class="exp-feature reveal" style="transition-delay:.3s">
+      <div class="exp-icon">✨</div>
+      <div>
+        <h4 data-i18n="exp.f3.title">Atmosfera Unica</h4>
+        <p  data-i18n="exp.f3.desc">Interni moderni e raffinati, illuminazione soffusa, musica selezionata. Ogni dettaglio curato per te.</p>
+      </div>
+    </div>
+    <div class="exp-feature reveal" style="transition-delay:.4s">
+      <div class="exp-icon">🍶</div>
+      <div>
+        <h4 data-i18n="exp.f4.title">Selezione Bevande</h4>
+        <p  data-i18n="exp.f4.desc">Sake pregiato, birre giapponesi, vini selezionati e cocktail ispirati alla cultura nipponica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== MENU ======================== -->
+<section id="menu">
+  <div class="reveal">
+    <p class="section-eyebrow" data-i18n="menu.eyebrow">Autentico · Raffinato · Artigianale</p>
+    <h2 class="section-title" data-i18n="menu.title">Il Nostro <em>Menù</em></h2>
+    <p class="section-subtitle" data-i18n="menu.subtitle">Coperto €1,50. ✦ indica i piatti speciali dello chef.</p>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="menu-tabs reveal">
+    <button class="cat-btn active" onclick="filterMenu('nigiri',this)"    data-i18n="cat.nigiri">Nigiri &amp; Gunkan</button>
+    <button class="cat-btn"        onclick="filterMenu('hosomaki',this)"  data-i18n="cat.hosomaki">Hosomaki, Temaki &amp; Sashimi</button>
+    <button class="cat-btn"        onclick="filterMenu('uramaki',this)"   data-i18n="cat.uramaki">Uramaki &amp; Special Rolls</button>
+    <button class="cat-btn"        onclick="filterMenu('antipasti',this)" data-i18n="cat.antipasti">Antipasti &amp; Carpacci</button>
+    <button class="cat-btn"        onclick="filterMenu('cucina',this)"    data-i18n="cat.cucina">Cucina &amp; Riso</button>
+    <button class="cat-btn"        onclick="filterMenu('dessert',this)"   data-i18n="cat.dessert">Dessert</button>
+    <button class="cat-btn"        onclick="filterMenu('bevande',this)"   data-i18n="cat.bevande">Bevande</button>
+  </div>
+
+  <!-- ===== NIGIRI & GUNKAN ===== -->
+  <div class="menu-panel active" data-cat="nigiri">
+    <div class="menu-scroll">
+      <div class="menu-row"><span class="menu-row-num">#1</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Salmone (2 pz)</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#2</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Tonno (2 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#3</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Branzino (2 pz)</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#4</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Gambero Cotto (2 pz)</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#5</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Gambero Rosso (1 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#6</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Scampo (1 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#7</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Anguilla (2 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#8</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Avocado (2 pz)</span></div><span class="menu-row-price">€2,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#9</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Salmone Scottato (2 pz)</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#10</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Tonno Scottato (2 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#11</span><div class="menu-row-body"><span class="menu-row-name">Nigiri Branzino Scottato (2 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#12</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Salmone (2 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#13</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Tonno (2 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#14</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Misto (2 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#15</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Gambero Cotto (2 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#16</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Philadelphia (2 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#17</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Wakame (2 pz)</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#18</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Tobiko (2 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#19</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Salmone Scottato (2 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#126</span><div class="menu-row-body"><span class="menu-row-name">Gunkan Cheese ✦</span><p class="menu-row-desc">Salmone scottato, cream cheese, pistacchio, teriyaki</p></div><span class="menu-row-price">€8,00</span></div>
+    </div>
+  </div>
+
+  <!-- ===== HOSOMAKI, TEMAKI & SASHIMI ===== -->
+  <div class="menu-panel" data-cat="hosomaki">
+    <div class="menu-scroll">
+      <div class="menu-row"><span class="menu-row-num">#21</span><div class="menu-row-body"><span class="menu-row-name">Hoso Salmone (6 pz)</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#22</span><div class="menu-row-body"><span class="menu-row-name">Hoso Tonno (6 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#23</span><div class="menu-row-body"><span class="menu-row-name">Hoso Branzino (6 pz)</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#24</span><div class="menu-row-body"><span class="menu-row-name">Hoso Gambero Cotto (6 pz)</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#25</span><div class="menu-row-body"><span class="menu-row-name">Hoso Avocado (6 pz)</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#26</span><div class="menu-row-body"><span class="menu-row-name">Hoso Cetriolo (6 pz)</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#27</span><div class="menu-row-body"><span class="menu-row-name">Hoso Surimi (6 pz)</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#28</span><div class="menu-row-body"><span class="menu-row-name">Hoso Salmone Fritto (6 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#31</span><div class="menu-row-body"><span class="menu-row-name">Temaki Salmone</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#32</span><div class="menu-row-body"><span class="menu-row-name">Temaki Tonno</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#33</span><div class="menu-row-body"><span class="menu-row-name">Temaki Branzino</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#34</span><div class="menu-row-body"><span class="menu-row-name">Temaki Gambero Cotto</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#35</span><div class="menu-row-body"><span class="menu-row-name">Temaki Avocado</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#36</span><div class="menu-row-body"><span class="menu-row-name">Temaki California</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#37</span><div class="menu-row-body"><span class="menu-row-name">Temaki Spicy Salmone</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#38</span><div class="menu-row-body"><span class="menu-row-name">Temaki Spicy Tonno</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#39</span><div class="menu-row-body"><span class="menu-row-name">Temaki Ebi Tempura</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#41</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Salmone (3 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#42</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Tonno (3 pz)</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#43</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Branzino (3 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#44</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Misto (6 pz)</span></div><span class="menu-row-price">€7,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#45</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Misto (12 pz)</span></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#46</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Salmone (6 pz)</span></div><span class="menu-row-price">€7,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#47</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Tonno (6 pz)</span></div><span class="menu-row-price">€8,00</span></div>
+    </div>
+  </div>
+
+  <!-- ===== URAMAKI & SPECIAL ROLLS ===== -->
+  <div class="menu-panel" data-cat="uramaki">
+    <div class="menu-scroll">
+      <div class="menu-row"><span class="menu-row-num">#51</span><div class="menu-row-body"><span class="menu-row-name">Summer ✦</span><p class="menu-row-desc">Tonno e avocado, esterno tonno tobiko</p></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#52</span><div class="menu-row-body"><span class="menu-row-name">Tobiko Orange ✦</span><p class="menu-row-desc">Salmone, philadelphia, tobiko, senza alghe</p></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#53</span><div class="menu-row-body"><span class="menu-row-name">Pistacchio Roll ✦</span><p class="menu-row-desc">Salmone crudo, avocado, salmone scottato, pistacchio, teriyaki</p></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#54</span><div class="menu-row-body"><span class="menu-row-name">Autume ✦</span><p class="menu-row-desc">Salmone crudo, avocado, esterno salmone tobiko</p></div><span class="menu-row-price">€11,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#55</span><div class="menu-row-body"><span class="menu-row-name">Wakame Roll</span><p class="menu-row-desc">Philadelphia, wakame, teriyaki, spicy, sesamo</p></div><span class="menu-row-price">€8,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#56</span><div class="menu-row-body"><span class="menu-row-name">Ika Lemon ✦</span><p class="menu-row-desc">Calamari fritto, salmone scottato, lime, tobiko, teriyaki</p></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#57</span><div class="menu-row-body"><span class="menu-row-name">Ebi Roll ✦</span><p class="menu-row-desc">Formaggio, gambero tempura, teriyaki, spicy</p></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#58</span><div class="menu-row-body"><span class="menu-row-name">Dragon Maki ✦</span><p class="menu-row-desc">Gambero tempura, salmone, mandorle, teriyaki</p></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#61</span><div class="menu-row-body"><span class="menu-row-name">Philamenta ✦</span><p class="menu-row-desc">Tonno cotto, mango, salmone scottato, philadelphia, menta</p></div><span class="menu-row-price">€13,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#62</span><div class="menu-row-body"><span class="menu-row-name">Crazy Roll ✦</span><p class="menu-row-desc">Gambero tempura, avocado, salmone, tonno, branzino, spicy, erba cipollina</p></div><span class="menu-row-price">€13,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#63</span><div class="menu-row-body"><span class="menu-row-name">Tonno Cotto ✦</span><p class="menu-row-desc">Tonno cotto, gambero cotto, avocado, sesamo</p></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#64</span><div class="menu-row-body"><span class="menu-row-name">New Mexico ✦</span><p class="menu-row-desc">Pollo tempura, insalata, teriyaki</p></div><span class="menu-row-price">€8,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#65</span><div class="menu-row-body"><span class="menu-row-name">Mango Speciale ✦</span><p class="menu-row-desc">Gambero tempura, esterno carpaccio di mango</p></div><span class="menu-row-price">€13,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#66</span><div class="menu-row-body"><span class="menu-row-name">Miura Maki ✦</span><p class="menu-row-desc">Salmone griglia, insalata, philadelphia, teriyaki</p></div><span class="menu-row-price">€9,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#67</span><div class="menu-row-body"><span class="menu-row-name">Oni Maki ✦</span><p class="menu-row-desc">Tonno cotto, esterno rucola</p></div><span class="menu-row-price">€9,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#68</span><div class="menu-row-body"><span class="menu-row-name">Salmone Menta ✦</span><p class="menu-row-desc">Salmone, philadelphia, menta, pistacchio, rucola</p></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#69</span><div class="menu-row-body"><span class="menu-row-name">Queen Roll ✦</span><p class="menu-row-desc">Salmone, mango, salmone esterno, teriyaki</p></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#70</span><div class="menu-row-body"><span class="menu-row-name">Hot Specia Roll ✦</span><p class="menu-row-desc">Surimi, gamberi cotti, tabasco, tobiko, salmone flambé, spicy</p></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#71</span><div class="menu-row-body"><span class="menu-row-name">Vegetariano</span></div><span class="menu-row-price">€7,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#72</span><div class="menu-row-body"><span class="menu-row-name">Vegetariano Mango</span></div><span class="menu-row-price">€8,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#73</span><div class="menu-row-body"><span class="menu-row-name">Sake Teppanyaki ✦</span><p class="menu-row-desc">Salmone fritto, avocado, tobiko, farina tempura, cipollotto</p></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#74</span><div class="menu-row-body"><span class="menu-row-name">Philadelphia Fritto (4 pz) ✦</span></div><span class="menu-row-price">€6,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#75</span><div class="menu-row-body"><span class="menu-row-name">Tonno Cotto Fritto (4 pz) ✦</span></div><span class="menu-row-price">€6,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#76</span><div class="menu-row-body"><span class="menu-row-name">Lemon Dragon ✦</span><p class="menu-row-desc">Gambero tempura, salmone, philadelphia, tobiko, lime</p></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#77</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Tartufo ✦</span><p class="menu-row-desc">Salmone, philadelphia, avocado, salmone scottato, tartufo</p></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#78</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Basilico ✦</span><p class="menu-row-desc">Gambero fritto, philadelphia, basilico, salmone, kataifi</p></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#79</span><div class="menu-row-body"><span class="menu-row-name">Sake Philadelphia ✦</span></div><span class="menu-row-price">€8,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#80</span><div class="menu-row-body"><span class="menu-row-name">Salmone Style ✦</span><p class="menu-row-desc">Salmone fritto, philadelphia, salmone esterno, guacamole</p></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#81</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Tartare Salmone</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#82</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Tartare Tonno</span></div><span class="menu-row-price">€11,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#83</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Kataifi</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#84</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Philadelphia e Salmone</span></div><span class="menu-row-price">€9,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#85</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Mix Fish</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#86</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Ebi Tempura</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#87</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Black Rice</span></div><span class="menu-row-price">€11,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#88</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Spicy Salmone</span></div><span class="menu-row-price">€9,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#89</span><div class="menu-row-body"><span class="menu-row-name">Onion Roll (4 pz) ✦</span></div><span class="menu-row-price">€8,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#90</span><div class="menu-row-body"><span class="menu-row-name">Pink Maki (4 pz) ✦</span></div><span class="menu-row-price">€6,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#91</span><div class="menu-row-body"><span class="menu-row-name">Futo Ebiten ✦</span></div><span class="menu-row-price">€6,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#92</span><div class="menu-row-body"><span class="menu-row-name">Futo Fritto ✦</span></div><span class="menu-row-price">€8,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#93</span><div class="menu-row-body"><span class="menu-row-name">Futo California ✦</span></div><span class="menu-row-price">€6,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#97</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Salmone e Mango</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#98</span><div class="menu-row-body"><span class="menu-row-name">Uramaki Tonno e Mango</span></div><span class="menu-row-price">€11,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#163</span><div class="menu-row-body"><span class="menu-row-name">Kampai Roll ✦</span></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#166</span><div class="menu-row-body"><span class="menu-row-name">Sicilia Roll ✦</span></div><span class="menu-row-price">€13,00</span></div>
+    </div>
+  </div>
+
+  <!-- ===== ANTIPASTI & CARPACCI ===== -->
+  <div class="menu-panel" data-cat="antipasti">
+    <div class="menu-scroll">
+      <div class="menu-row"><span class="menu-row-num">#101</span><div class="menu-row-body"><span class="menu-row-name">Edamame</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#102</span><div class="menu-row-body"><span class="menu-row-name">Spicy Edamame</span></div><span class="menu-row-price">€3,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#103</span><div class="menu-row-body"><span class="menu-row-name">Goma Wakame</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#104</span><div class="menu-row-body"><span class="menu-row-name">Sunomono</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#105</span><div class="menu-row-body"><span class="menu-row-name">Ebi Sunomono</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#106</span><div class="menu-row-body"><span class="menu-row-name">Insalata di Salmone</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#107</span><div class="menu-row-body"><span class="menu-row-name">Insalata di Tonno</span></div><span class="menu-row-price">€7,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#108</span><div class="menu-row-body"><span class="menu-row-name">Tartare Salmone</span></div><span class="menu-row-price">€8,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#109</span><div class="menu-row-body"><span class="menu-row-name">Tartare Tonno</span></div><span class="menu-row-price">€9,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#110</span><div class="menu-row-body"><span class="menu-row-name">Tartare Mista</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#111</span><div class="menu-row-body"><span class="menu-row-name">Carpaccio Salmone</span></div><span class="menu-row-price">€9,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#112</span><div class="menu-row-body"><span class="menu-row-name">Carpaccio Tonno</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#113</span><div class="menu-row-body"><span class="menu-row-name">Carpaccio Misto</span></div><span class="menu-row-price">€11,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#114</span><div class="menu-row-body"><span class="menu-row-name">Salmone Tataki</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#115</span><div class="menu-row-body"><span class="menu-row-name">Tonno Tataki</span></div><span class="menu-row-price">€11,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#116</span><div class="menu-row-body"><span class="menu-row-name">Gyoza alla Griglia (4 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#117</span><div class="menu-row-body"><span class="menu-row-name">Gyoza Verdure (4 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#118</span><div class="menu-row-body"><span class="menu-row-name">Gyoza Gamberi (4 pz)</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#127</span><div class="menu-row-body"><span class="menu-row-name">Croccante ✦</span><p class="menu-row-desc">Spicy salmone, philadelphia</p></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#128</span><div class="menu-row-body"><span class="menu-row-name">Millefoglie Tonno ✦</span></div><span class="menu-row-price">€9,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#129</span><div class="menu-row-body"><span class="menu-row-name">Millefoglie Salmone ✦</span></div><span class="menu-row-price">€8,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#130</span><div class="menu-row-body"><span class="menu-row-name">Chips Philadelphia ✦</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#131</span><div class="menu-row-body"><span class="menu-row-name">Chips Tonno ✦</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#132</span><div class="menu-row-body"><span class="menu-row-name">Chirashi Sake ✦</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#133</span><div class="menu-row-body"><span class="menu-row-name">Chirashi Misto ✦</span></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#141</span><div class="menu-row-body"><span class="menu-row-name">Black Mi Tartar ✦</span></div><span class="menu-row-price">€8,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#142</span><div class="menu-row-body"><span class="menu-row-name">Black Burger ✦</span></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#143</span><div class="menu-row-body"><span class="menu-row-name">Tartare Tartufo ✦</span></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#144</span><div class="menu-row-body"><span class="menu-row-name">Tartare Amaebi Tartufo ✦</span></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#145</span><div class="menu-row-body"><span class="menu-row-name">Tartare 3 Cucchiaio ✦</span></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#146</span><div class="menu-row-body"><span class="menu-row-name">Tartare Sake Belga ✦</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#147</span><div class="menu-row-body"><span class="menu-row-name">Tartare Tonno Belga ✦</span></div><span class="menu-row-price">€12,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#162</span><div class="menu-row-body"><span class="menu-row-name">Carpaccio Kampai ✦</span></div><span class="menu-row-price">€10,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#164</span><div class="menu-row-body"><span class="menu-row-name">Carpaccio di Tonno Zuke ✦</span></div><span class="menu-row-price">€13,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#165</span><div class="menu-row-body"><span class="menu-row-name">Noodles di Salmone ✦</span></div><span class="menu-row-price">€11,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#167</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Mix con Burrata ✦</span></div><span class="menu-row-price">€15,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#168</span><div class="menu-row-body"><span class="menu-row-name">Sashimi Mix ✦</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#169</span><div class="menu-row-body"><span class="menu-row-name">Carpaccio Yougot ✦</span></div><span class="menu-row-price">€10,00</span></div>
+    </div>
+  </div>
+
+  <!-- ===== CUCINA & RISO ===== -->
+  <div class="menu-panel" data-cat="cucina">
+    <div class="menu-scroll">
+      <div class="menu-row"><span class="menu-row-num">#120</span><div class="menu-row-body"><span class="menu-row-name">Ebi Fry (2 pz)</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#121</span><div class="menu-row-body"><span class="menu-row-name">Teppanyaki Gamberi (3 pz)</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#122</span><div class="menu-row-body"><span class="menu-row-name">Teppanyaki Salmone</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#123</span><div class="menu-row-body"><span class="menu-row-name">Teppanyaki Branzino</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#124</span><div class="menu-row-body"><span class="menu-row-name">Yakitori (2 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#125</span><div class="menu-row-body"><span class="menu-row-name">Pane Fritto (2 pz)</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#180</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti di Riso Gamberi ✦</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#180A</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti di Riso Frutti di Mare ✦</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#181A</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti di Soia con Gamberi ✦</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#181B</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti di Soia con Pollo</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#181C</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti di Soia Piccante ✦</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#181D</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti di Soia Frutti di Mare ✦</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#182</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti Frutti di Mare ✦</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#183</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti Verdure ✦</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#183A</span><div class="menu-row-body"><span class="menu-row-name">Spaghetti Pollo</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#184</span><div class="menu-row-body"><span class="menu-row-name">Manzo Udon</span></div><span class="menu-row-price">€7,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#185</span><div class="menu-row-body"><span class="menu-row-name">Yaki Udon</span></div><span class="menu-row-price">€7,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#186</span><div class="menu-row-body"><span class="menu-row-name">Ebi Yaki Udon ✦</span></div><span class="menu-row-price">€7,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#187</span><div class="menu-row-body"><span class="menu-row-name">Yaki Soba</span></div><span class="menu-row-price">€7,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#188</span><div class="menu-row-body"><span class="menu-row-name">Ebi Yaki Soba ✦</span></div><span class="menu-row-price">€7,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#189</span><div class="menu-row-body"><span class="menu-row-name">Ramen Verdure</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#190</span><div class="menu-row-body"><span class="menu-row-name">Manzo Ramen</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#191</span><div class="menu-row-body"><span class="menu-row-name">Manzo Ramen Brodo</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#192</span><div class="menu-row-body"><span class="menu-row-name">Frutti di Mare Ramen ✦</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#201</span><div class="menu-row-body"><span class="menu-row-name">Tori Karaage</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#202</span><div class="menu-row-body"><span class="menu-row-name">Harumaki (2 pz)</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#203</span><div class="menu-row-body"><span class="menu-row-name">Patatine Fritte</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#204</span><div class="menu-row-body"><span class="menu-row-name">Takoyaki (4 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#205</span><div class="menu-row-body"><span class="menu-row-name">Ebi Tempura (3 pz)</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#206</span><div class="menu-row-body"><span class="menu-row-name">Yasai Tempura</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#207</span><div class="menu-row-body"><span class="menu-row-name">Tempura Mista</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#210</span><div class="menu-row-body"><span class="menu-row-name">Riso Bianco</span></div><span class="menu-row-price">€2,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#211</span><div class="menu-row-body"><span class="menu-row-name">Riso alla Cantonese</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#212</span><div class="menu-row-body"><span class="menu-row-name">Riso con Verdure</span></div><span class="menu-row-price">€4,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#213</span><div class="menu-row-body"><span class="menu-row-name">Riso con Gamberi</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#214</span><div class="menu-row-body"><span class="menu-row-name">Riso Frutti di Mare</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#215</span><div class="menu-row-body"><span class="menu-row-name">Riso Salmone e Avocado</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#216</span><div class="menu-row-body"><span class="menu-row-name">Riso Nero con Verdure</span></div><span class="menu-row-price">€5,50</span></div>
+      <div class="menu-row"><span class="menu-row-num">#217</span><div class="menu-row-body"><span class="menu-row-name">Riso Nero Gamberi</span></div><span class="menu-row-price">€6,00</span></div>
+    </div>
+  </div>
+
+  <!-- ===== DESSERT ===== -->
+  <div class="menu-panel" data-cat="dessert">
+    <div class="menu-scroll">
+      <div class="menu-row"><span class="menu-row-num">#233</span><div class="menu-row-body"><span class="menu-row-name">Gelato Bimby</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#234</span><div class="menu-row-body"><span class="menu-row-name">Coppa al Pistacchio</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#235</span><div class="menu-row-body"><span class="menu-row-name">Coppa alla Spagnola</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#236</span><div class="menu-row-body"><span class="menu-row-name">Coppa al Caffè</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#237</span><div class="menu-row-body"><span class="menu-row-name">Flute Limoncello</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#238</span><div class="menu-row-body"><span class="menu-row-name">Coppa Cheesecake Monterosa</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num">#239</span><div class="menu-row-body"><span class="menu-row-name">Torroncino</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Dorayaki (2 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Mochi (2 pz)</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Frutta Caramellata</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Sorbetto al Limone</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Tartufo Bianco / Nero</span></div><span class="menu-row-price">€5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Gelato Fritto</span></div><span class="menu-row-price">€5,00</span></div>
+    </div>
+  </div>
+
+  <!-- ===== BEVANDE ===== -->
+  <div class="menu-panel" data-cat="bevande">
+    <div class="menu-scroll">
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Acqua (50 cl)</span></div><span class="menu-row-price">€1,50</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Acqua (1 L)</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Bibite (33 cl)</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Tè Freddo</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Birre (33 cl)</span></div><span class="menu-row-price">€3,50 – €4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Birre (50 / 64 cl)</span></div><span class="menu-row-price">€6,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Vino (Calice)</span></div><span class="menu-row-price">€4,00 – €5,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Vino (Bottiglia)</span></div><span class="menu-row-price">€15,00 – €25,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Sake</span></div><span class="menu-row-price">€4,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Caffè / Ginseng / Tè Giapponese</span></div><span class="menu-row-price">€1,50 – €2,50</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name">Amaro / Grappa</span></div><span class="menu-row-price">€3,00</span></div>
+      <div class="menu-row"><span class="menu-row-num"></span><div class="menu-row-body"><span class="menu-row-name" data-i18n="bev.coperto">Coperto</span></div><span class="menu-row-price">€1,50</span></div>
+    </div>
+  </div>
+
+  <!-- All You Can Eat banner -->
+  <div class="ayce-banner reveal">
+    <div>
+      <h3 data-i18n="ayce.title">All You Can Eat</h3>
+      <p data-i18n="ayce.desc">Tutto il menù a disposizione in un'unica esperienza. Bevande, dolci e coperto esclusi.<br/>
+        Cibo avanzato addebitato a prezzo di listino. <strong style="color:var(--gold-light)" data-i18n="ayce.kids">Bambini sotto 1,30 m: €12,00</strong></p>
+    </div>
+    <div class="ayce-price">€26,90 <span data-i18n="ayce.note">a persona · solo cena</span></div>
+  </div>
+
+</section>
+
+<!-- ======================== CHI SIAMO ======================== -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-images">
+      <!--
+        REPLACE with real photos:
+        <img class="about-img-main" src="img/chef.jpg" alt="Chef KAMPAI">
+        <img class="about-img-accent" src="img/interior.jpg" alt="Interno">
+      -->
+      <div class="about-img-main img-placeholder reveal-left" style="height:360px">📷 Chef / cucina</div>
+      <div class="about-img-accent img-placeholder" style="height:200px">📷 Interno</div>
+    </div>
+
+    <div class="about-text">
+      <p class="section-eyebrow reveal" data-i18n="about.eyebrow">La nostra storia</p>
+      <h2 class="section-title reveal" data-i18n="about.title">Dove nasce<br/><em>l'eccellenza</em></h2>
+      <div class="gold-line reveal"></div>
+      <blockquote class="reveal" data-i18n="about.quote">
+        "Il sushi non è solo cibo. È una filosofia, un'estetica, una forma d'amore per la materia prima."
+      </blockquote>
+      <p class="reveal" data-i18n="about.p1">KAMPAI nasce dal sogno di portare l'autentica cultura culinaria giapponese nel cuore dell'Emilia. Non una semplice imitazione, ma un'interpretazione fedele e contemporanea di una tradizione millenaria.</p>
+      <p class="reveal" data-i18n="about.p2">I nostri chef hanno studiato e vissuto in Giappone, apprendendo le tecniche direttamente dai maestri. Ogni giorno selezionano personalmente il pesce e preparano ogni salsa da zero.</p>
+      <p class="reveal" data-i18n="about.p3">A Vignola, in un ambiente moderno ed elegante, KAMPAI è diventato il riferimento per chi non vuole rinunciare alla qualità e all'esperienza.</p>
+      <div class="reveal">
+        <a href="#contact" class="btn-primary" style="margin-top:1.8rem; display:inline-block" data-i18n="about.cta">Prenota il tuo tavolo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== REVIEWS ======================== -->
+<section id="reviews">
+  <div class="reviews-header reveal">
+    <p class="section-eyebrow" data-i18n="rev.eyebrow">Cosa dicono di noi</p>
+    <h2 class="section-title" data-i18n="rev.title">Recensioni <em>Clienti</em></h2>
+    <!-- corrected: 4.2 ★ -->
+    <div class="google-rating" style="margin-top:1rem">
+      <span class="stars">★★★★</span>
+      <span class="score">4.2</span>
+      <span class="label">Google Reviews</span>
+    </div>
+  </div>
+
+  <div class="reviews-track-wrap">
+    <div class="reviews-track" id="reviewsTrack">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Un'esperienza che supera ogni aspettativa. Il sushi è di livello assoluto, paragonabile ai migliori locali di Milano. Il personale è gentilissimo e l'atmosfera è magica."</p>
+        <p class="review-author">Marco B. <span class="review-source">· Google</span></p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Abbiamo festeggiato il nostro anniversario da KAMPAI. Tutto perfetto: salmone freschissimo, riso perfetto, servizio impeccabile. Torneremo sicuramente!"</p>
+        <p class="review-author">Alessia & Marco <span class="review-source">· Google</span></p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Il miglior sushi della zona, senza dubbio. Il KAMPAI Special Roll è semplicemente divino. Prezzi giusti per la qualità offerta."</p>
+        <p class="review-author">Luca G. <span class="review-source">· Google</span></p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"Finalmente un ristorante giapponese autentico vicino a Modena. Gli ingredienti sono di primissima qualità e si sente."</p>
+        <p class="review-author">Francesca V. <span class="review-source">· Google</span></p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ambiente elegante e raffinato, perfetto per una cena romantica. Il set omakase è un'esperienza unica. Lo chef ci ha spiegato ogni piatto con passione incredibile."</p>
+        <p class="review-author">Roberto & Chiara <span class="review-source">· Google</span></p>
+      </div>
+      <!-- duplicate set for seamless loop -->
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Un'esperienza che supera ogni aspettativa. Il sushi è di livello assoluto, paragonabile ai migliori locali di Milano. Il personale è gentilissimo e l'atmosfera è magica."</p>
+        <p class="review-author">Marco B. <span class="review-source">· Google</span></p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Abbiamo festeggiato il nostro anniversario da KAMPAI. Tutto perfetto: salmone freschissimo, riso perfetto, servizio impeccabile. Torneremo sicuramente!"</p>
+        <p class="review-author">Alessia & Marco <span class="review-source">· Google</span></p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Il miglior sushi della zona, senza dubbio. Il KAMPAI Special Roll è semplicemente divino. Prezzi giusti per la qualità offerta."</p>
+        <p class="review-author">Luca G. <span class="review-source">· Google</span></p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"Finalmente un ristorante giapponese autentico vicino a Modena. Gli ingredienti sono di primissima qualità e si sente."</p>
+        <p class="review-author">Francesca V. <span class="review-source">· Google</span></p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ambiente elegante e raffinato, perfetto per una cena romantica. Il set omakase è un'esperienza unica. Lo chef ci ha spiegato ogni piatto con passione incredibile."</p>
+        <p class="review-author">Roberto & Chiara <span class="review-source">· Google</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== GALLERY ======================== -->
+<section id="gallery">
+  <div class="reveal" style="text-align:center">
+    <p class="section-eyebrow" data-i18n="gal.eyebrow">Atmosfera & Sapori</p>
+    <h2 class="section-title"  data-i18n="gal.title">La nostra <em>Galleria</em></h2>
+    <p class="section-subtitle" style="margin-bottom:0" data-i18n="gal.subtitle">Le foto originali verranno caricate a breve.</p>
+  </div>
+  <div class="gallery-grid">
+    <!-- REPLACE each placeholder with <img src="img/galX.jpg" alt="..."> -->
+    <div class="gallery-item reveal">
+      <div class="img-placeholder" style="min-height:320px">📷 Sushi platter</div>
+      <div class="gallery-overlay"><span>✦</span></div>
+    </div>
+    <div class="gallery-item reveal" style="transition-delay:.08s">
+      <div class="img-placeholder" style="min-height:160px">📷 Nigiri</div>
+      <div class="gallery-overlay"><span>✦</span></div>
+    </div>
+    <div class="gallery-item reveal" style="transition-delay:.16s">
+      <div class="img-placeholder" style="min-height:160px">📷 Sashimi</div>
+      <div class="gallery-overlay"><span>✦</span></div>
+    </div>
+    <div class="gallery-item reveal" style="transition-delay:.08s">
+      <div class="img-placeholder" style="min-height:160px">📷 Interno</div>
+      <div class="gallery-overlay"><span>✦</span></div>
+    </div>
+    <div class="gallery-item reveal" style="transition-delay:.16s">
+      <div class="img-placeholder" style="min-height:160px">📷 Cocktail</div>
+      <div class="gallery-overlay"><span>✦</span></div>
+    </div>
+    <div class="gallery-item reveal" style="transition-delay:.24s">
+      <div class="img-placeholder" style="min-height:200px">📷 Sushi speciale</div>
+      <div class="gallery-overlay"><span>✦</span></div>
+    </div>
+    <div class="gallery-item reveal" style="transition-delay:.32s">
+      <div class="img-placeholder" style="min-height:200px">📷 Chef</div>
+      <div class="gallery-overlay"><span>✦</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== CONTACTS ======================== -->
+<section id="contact">
+  <div class="reveal">
+    <p class="section-eyebrow" data-i18n="con.eyebrow">Vieni a trovarci</p>
+    <h2 class="section-title"  data-i18n="con.title">Contatti & <em>Prenotazioni</em></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal-left">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <strong data-i18n="con.addr">Indirizzo</strong>
+          <p>Corso Italia, 3<br/>41058 Vignola (MO), Italia</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <strong data-i18n="con.phone">Telefono</strong>
+          <p><a href="tel:+390598880000">+39 059 888 0000</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div>
+          <strong>Email</strong>
+          <p><a href="mailto:info@kampai-vignola.it">info@kampai-vignola.it</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <strong data-i18n="con.hours">Orari</strong>
+          <div class="hours-grid">
+            <span class="hours-day" data-i18n="con.lun">Lunedì</span>
+            <span class="hours-time" data-i18n="con.lun.h">Chiuso</span>
+            <span class="hours-day" data-i18n="con.mar">Mar – Ven</span>
+            <span class="hours-time">12:00–14:30 / 19:00–23:00</span>
+            <span class="hours-day" data-i18n="con.sab">Sab – Dom</span>
+            <span class="hours-time">12:00–23:30</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div>
+          <strong data-i18n="con.social">Seguici</strong>
+          <div class="social-links">
+            <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram">IG</a>
+            <a href="https://facebook.com"  target="_blank" class="social-link" title="Facebook">FB</a>
+            <a href="https://tiktok.com"    target="_blank" class="social-link" title="TikTok">TK</a>
+            <a href="https://wa.me/393334567890" target="_blank" class="social-link" style="border-color:#25D366;color:#25D366" title="WhatsApp">WA</a>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/393334567890" class="btn-primary" target="_blank"
+         style="display:inline-block;margin-top:1.5rem" data-i18n="con.wa">Prenota via WhatsApp</a>
+    </div>
+
+    <div class="map-wrap reveal-right">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2839.0!2d11.0088!3d44.4716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477fedb1d31b9aa1%3A0x1e8a2a2a2a2a2a2a!2sCorso%20Italia%2C%203%2C%2041058%20Vignola%20MO!5e0!3m2!1sit!2sit!4v1700000000000"
+        allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="KAMPAI – Vignola">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== FOOTER ======================== -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">K<span>A</span>MPAI</div>
+      <p data-i18n="footer.desc">L'eleganza del Giappone, il gusto dell'eccellenza.<br/>Ristorante giapponese premium a Vignola, Modena.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.nav">Navigazione</h4>
+      <ul>
+        <li><a href="#hero"    data-i18n="footer.home">Home</a></li>
+        <li><a href="#menu"    data-i18n="footer.menu">Menù</a></li>
+        <li><a href="#about"   data-i18n="footer.about">Chi Siamo</a></li>
+        <li><a href="#gallery" data-i18n="footer.gallery">Galleria</a></li>
+        <li><a href="#contact" data-i18n="footer.contact">Contatti</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.info">Informazioni</h4>
+      <ul>
+        <li><a href="https://maps.google.com" target="_blank">Corso Italia, 3 – Vignola</a></li>
+        <li><a href="tel:+390598880000">+39 059 888 0000</a></li>
+        <li><a href="mailto:info@kampai-vignola.it">info@kampai-vignola.it</a></li>
+        <li><a href="https://wa.me/393334567890" target="_blank">WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p data-i18n="footer.copy">© 2025 KAMPAI Ristorante Giapponese. Tutti i diritti riservati.</p>
+    <p><a href="#hero">Torna su ↑</a></p>
+  </div>
+</footer>
+
+<!-- ======================== WHATSAPP FIXED ======================== -->
+<a id="wa-fixed" href="https://wa.me/393334567890" target="_blank" rel="noopener" title="Scrivici su WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <span data-i18n="wa.text">Prenota su WhatsApp</span>
+</a>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+<script>
+/* ---------- TRANSLATIONS ---------- */
+const i18n = {
+  it: {
+    'nav.menu':'Menù','nav.about':'Chi Siamo','nav.gallery':'Galleria',
+    'nav.contact':'Contatti','nav.book':'Prenota',
+    'hero.eyebrow':'Vignola · Modena · Italia',
+    'hero.subtitle':"L'eleganza del Giappone, il gusto dell'eccellenza.",
+    'hero.cta1':'Guarda il Menù','hero.cta2':'WhatsApp','hero.scroll':'Scopri',
+    'intro.eyebrow':'Il Ristorante',
+    'intro.title':"Un'esperienza oltre il sushi",
+    'intro.p1':"Nel cuore di Vignola, KAMPAI è il tempio del sushi d'autore. Ogni piatto è un viaggio sensoriale tra le tradizioni millenarie del Giappone e l'eleganza della cucina contemporanea.",
+    'intro.p2':"Ingredienti selezionati, tecniche autentiche e una cura ossessiva per i dettagli fanno di ogni visita un'esperienza indimenticabile.",
+    'intro.stat1':'Anni di eccellenza','intro.stat2':'Piatti in menù','intro.stat3':'Google Reviews',
+    'sig.eyebrow':'I Nostri Capolavori','sig.title':'Piatti Signature','sig.cta':'Tutto il Menù',
+    'dish1.desc':'Salmone, avocado, crema di gambero, tobiko dorato, salsa yuzu.',
+    'dish2.desc':'Selezione del giorno: tonno, salmone, branzino, ricciola, daikon.',
+    'dish3.desc':'10 pezzi selezionati dallo chef, abbinamento stagionale.',
+    'exp.eyebrow':"L'Esperienza",'exp.title':'Dove il lusso incontra la tradizione',
+    'exp.f1.title':'Ingredienti Premium','exp.f1.desc':'Pesce freschissimo selezionato ogni giorno, importato dai mercati più esclusivi. Zero compromessi sulla qualità.',
+    'exp.f2.title':"Maestri dell'Arte",'exp.f2.desc':"I nostri chef hanno perfezionato l'arte del sushi in Giappone. Ogni preparazione è un rituale di precisione e bellezza.",
+    'exp.f3.title':'Atmosfera Unica','exp.f3.desc':'Interni moderni e raffinati, illuminazione soffusa, musica selezionata. Ogni dettaglio curato per te.',
+    'exp.f4.title':'Selezione Bevande','exp.f4.desc':'Sake pregiato, birre giapponesi, vini selezionati e cocktail ispirati alla cultura nipponica.',
+    'menu.eyebrow':'Autentico · Raffinato · Artigianale','menu.title':'Il Nostro Menù',
+    'menu.subtitle':'Coperto €1,50. ✦ indica i piatti speciali dello chef.',
+    'cat.nigiri':'Nigiri &amp; Gunkan',
+    'cat.hosomaki':'Hosomaki, Temaki &amp; Sashimi',
+    'cat.uramaki':'Uramaki &amp; Special Rolls',
+    'cat.antipasti':'Antipasti &amp; Carpacci',
+    'cat.cucina':'Cucina &amp; Riso',
+    'cat.bevande':'Bevande','cat.dessert':'Dessert',
+    'ayce.title':'All You Can Eat',
+    'ayce.desc':'Tutto il menù a disposizione in un\'unica esperienza. Bevande, dolci e coperto esclusi.<br/>Cibo avanzato addebitato a prezzo di listino.',
+    'ayce.kids':'Bambini sotto 1,30 m: €12,00',
+    'ayce.note':'a persona · solo cena',
+    'bev.coperto':'Coperto',
+    'about.eyebrow':'La nostra storia','about.title':"Dove nasce l'eccellenza",
+    'about.quote':'"Il sushi non è solo cibo. È una filosofia, un\'estetica, una forma d\'amore per la materia prima."',
+    'about.p1':"KAMPAI nasce dal sogno di portare l'autentica cultura culinaria giapponese nel cuore dell'Emilia. Non una semplice imitazione, ma un'interpretazione fedele e contemporanea.",
+    'about.p2':'I nostri chef hanno studiato e vissuto in Giappone, apprendendo le tecniche direttamente dai maestri. Ogni giorno selezionano personalmente il pesce.',
+    'about.p3':'A Vignola, in un ambiente moderno ed elegante, KAMPAI è diventato il riferimento per chi non vuole rinunciare alla qualità.',
+    'about.cta':'Prenota il tuo tavolo',
+    'rev.eyebrow':'Cosa dicono di noi','rev.title':'Recensioni Clienti',
+    'gal.eyebrow':'Atmosfera & Sapori','gal.title':'La nostra Galleria','gal.subtitle':'Le foto originali verranno caricate a breve.',
+    'con.eyebrow':'Vieni a trovarci','con.title':'Contatti & Prenotazioni',
+    'con.addr':'Indirizzo','con.phone':'Telefono','con.hours':'Orari',
+    'con.lun':'Lunedì','con.lun.h':'Chiuso','con.mar':'Mar – Ven','con.sab':'Sab – Dom',
+    'con.social':'Seguici','con.wa':'Prenota via WhatsApp',
+    'footer.desc':"L'eleganza del Giappone, il gusto dell'eccellenza. Ristorante giapponese premium a Vignola, Modena.",
+    'footer.nav':'Navigazione','footer.home':'Home','footer.menu':'Menù',
+    'footer.about':'Chi Siamo','footer.gallery':'Galleria','footer.contact':'Contatti',
+    'footer.info':'Informazioni','footer.copy':'© 2025 KAMPAI Ristorante Giapponese. Tutti i diritti riservati.',
+    'wa.text':'Prenota su WhatsApp',
+  },
+  en: {
+    'nav.menu':'Menu','nav.about':'About','nav.gallery':'Gallery',
+    'nav.contact':'Contact','nav.book':'Book Now',
+    'hero.eyebrow':'Vignola · Modena · Italy',
+    'hero.subtitle':'The elegance of Japan, the taste of excellence.',
+    'hero.cta1':'See the Menu','hero.cta2':'WhatsApp','hero.scroll':'Discover',
+    'intro.eyebrow':'The Restaurant',
+    'intro.title':'An experience beyond sushi',
+    'intro.p1':"In the heart of Vignola, KAMPAI is the temple of artisan sushi. Every dish is a sensory journey between Japan's ancient traditions and the elegance of contemporary cuisine.",
+    'intro.p2':"Selected ingredients, authentic techniques and an obsessive attention to detail make every visit an unforgettable experience.",
+    'intro.stat1':'Years of excellence','intro.stat2':'Menu items','intro.stat3':'Google Reviews',
+    'sig.eyebrow':'Our Masterpieces','sig.title':'Signature Dishes','sig.cta':'Full Menu',
+    'dish1.desc':'Salmon, avocado, shrimp cream, golden tobiko, yuzu sauce.',
+    'dish2.desc':"Chef's daily selection: tuna, salmon, sea bass, amberjack, daikon.",
+    'dish3.desc':'10 chef-selected pieces, seasonal pairing.',
+    'exp.eyebrow':'The Experience','exp.title':'Where luxury meets tradition',
+    'exp.f1.title':'Premium Ingredients','exp.f1.desc':"Freshest fish selected daily, imported from the world's most exclusive markets. Zero compromises.",
+    'exp.f2.title':'Masters of the Art','exp.f2.desc':'Our chefs perfected the art of sushi in Japan. Every preparation is a ritual of precision and beauty.',
+    'exp.f3.title':'Unique Atmosphere','exp.f3.desc':'Modern refined interiors, soft lighting, curated music. Every detail designed for your wellbeing.',
+    'exp.f4.title':'Beverage Selection','exp.f4.desc':'Fine sake, Japanese beers, selected wines and cocktails inspired by Japanese culture.',
+    'menu.eyebrow':'Authentic · Refined · Artisanal','menu.title':'Our Menu',
+    'menu.subtitle':'Cover charge €1.50. ✦ indicates chef\'s special dishes.',
+    'cat.nigiri':'Nigiri &amp; Gunkan',
+    'cat.hosomaki':'Hosomaki, Temaki &amp; Sashimi',
+    'cat.uramaki':'Uramaki &amp; Special Rolls',
+    'cat.antipasti':'Starters &amp; Carpaccio',
+    'cat.cucina':'Kitchen &amp; Rice',
+    'cat.bevande':'Drinks','cat.dessert':'Dessert',
+    'ayce.title':'All You Can Eat',
+    'ayce.desc':'The entire menu at your disposal in one experience. Drinks, desserts and cover charge excluded.<br/>Leftover food charged at list price.',
+    'ayce.kids':'Children under 1.30 m: €12.00',
+    'ayce.note':'per person · dinner only',
+    'bev.coperto':'Cover Charge',
+    'about.eyebrow':'Our story','about.title':'Where excellence is born',
+    'about.quote':'"Sushi is not just food. It\'s a philosophy, an aesthetic, a form of love for the ingredient."',
+    'about.p1':"KAMPAI was born from the dream of bringing authentic Japanese culinary culture to the heart of Emilia. Not a simple imitation, but a faithful contemporary interpretation.",
+    'about.p2':'Our chefs have studied and lived in Japan, learning techniques directly from the masters. Every day they personally select the fish.',
+    'about.p3':'In Vignola, in a modern elegant setting, KAMPAI has become the reference point for those who refuse to compromise on quality.',
+    'about.cta':'Book your table',
+    'rev.eyebrow':'What people say','rev.title':'Customer Reviews',
+    'gal.eyebrow':'Atmosphere & Flavors','gal.title':'Our Gallery','gal.subtitle':'Original photos coming soon.',
+    'con.eyebrow':'Come visit us','con.title':'Contacts & Reservations',
+    'con.addr':'Address','con.phone':'Phone','con.hours':'Hours',
+    'con.lun':'Monday','con.lun.h':'Closed','con.mar':'Tue – Fri','con.sab':'Sat – Sun',
+    'con.social':'Follow us','con.wa':'Book via WhatsApp',
+    'footer.desc':'The elegance of Japan, the taste of excellence. Premium Japanese restaurant in Vignola, Modena.',
+    'footer.nav':'Navigation','footer.home':'Home','footer.menu':'Menu',
+    'footer.about':'About','footer.gallery':'Gallery','footer.contact':'Contact',
+    'footer.info':'Information','footer.copy':'© 2025 KAMPAI Japanese Restaurant. All rights reserved.',
+    'wa.text':'Book on WhatsApp',
+  }
+};
+
+function setLang(lang) {
+  const htmlKeys = new Set(['ayce.desc']); // keys whose values contain HTML
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang.toLowerCase());
+  });
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    const val = i18n[lang]?.[k];
+    if (!val) return;
+    if (htmlKeys.has(k)) el.innerHTML = val;
+    else el.textContent = val;
+  });
+  // re-label the tab buttons (they use innerHTML for &amp;)
+  document.querySelectorAll('.cat-btn[data-i18n]').forEach(btn => {
+    const k = btn.getAttribute('data-i18n');
+    const val = i18n[lang]?.[k];
+    if (val) btn.innerHTML = val;
+  });
+}
+
+/* ---------- LOADER ---------- */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1800);
+});
+
+/* ---------- CUSTOM CURSOR (desktop) ---------- */
+const cursorEl = document.getElementById('cursor');
+const ringEl   = document.getElementById('cursor-ring');
+if (cursorEl && ringEl) {
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursorEl.style.left = mx + 'px';
+    cursorEl.style.top  = my + 'px';
+  });
+  (function animRing() {
+    rx += (mx - rx) * .12;
+    ry += (my - ry) * .12;
+    ringEl.style.left = rx + 'px';
+    ringEl.style.top  = ry + 'px';
+    requestAnimationFrame(animRing);
+  })();
+}
+
+/* ---------- STICKY NAV ---------- */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ---------- HAMBURGER ---------- */
+const hamburger  = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+function closeMobile() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+/* close mobile menu on ESC */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobile(); });
+
+/* ---------- MENU FILTER ---------- */
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.menu-panel').forEach(panel => {
+    panel.classList.toggle('active', panel.dataset.cat === cat);
+  });
+}
+
+/* ---------- SCROLL REVEAL ---------- */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+/* ---------- SMOOTH SCROLL ---------- */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 80; // navbar height
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
